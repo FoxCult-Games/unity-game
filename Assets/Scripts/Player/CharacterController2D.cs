@@ -19,6 +19,7 @@ namespace Player
         [SerializeField] private bool isGrounded;
 
         public UnityEvent<int, Vector2> onDamaged;
+        public UnityEvent onJump;
 
         private int health;
         public int Health => health;
@@ -91,14 +92,11 @@ namespace Player
             if(isGrounded) animator.SetTrigger(jumpingAnimation);
 
             rb.AddForce(Vector2.up * playerData.JumpForce);
-
-            Vector3 particlesPosition = transform.position + Vector3.down;
-            
-            GameObject particlesObject = Instantiate(playerData.JumpParticles, particlesPosition, Quaternion.identity);
-            particlesObject.GetComponent<ParticleSystem>().Play();
             
             currentGroundedThreshold = playerData.GroundedCheckThreshold;
             lastJumpTime = Time.time;
+
+            onJump?.Invoke();
         }
 
         private bool IsGrounded()
@@ -129,6 +127,14 @@ namespace Player
         private bool IsSensitive()
         {
             return Time.time - lastDamagedTime > playerData.InsensitivityTime;
+        }
+
+        public void PlayJumpingParticles()
+        {
+            Vector3 particlesPosition = transform.position + Vector3.down;
+
+            GameObject particlesObject = Instantiate(playerData.JumpParticles, particlesPosition, Quaternion.identity);
+            particlesObject.GetComponent<ParticleSystem>().Play();
         }
 
         public void Die()
