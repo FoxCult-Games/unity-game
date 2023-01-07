@@ -30,12 +30,17 @@ namespace Enemies
             
             if(Time.time - lastFiredTime < shooterData.FireRate) return;
             
-            Shoot();
+            ShootAnimation();
         }
 
         private bool IsPlayerInRange()
         {
             return true;
+        }
+        
+        private void ShootAnimation()
+        {
+            
         }
 
         public void Shoot()

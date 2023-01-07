@@ -43,6 +43,10 @@ namespace Enemies
 
             float height = 2 * (nextX - startingPosition.x) * (nextX - landingPosition.x) / (-0.25f * distance * distance);
             
+            Debug.Log("baseY + height: " + baseY + height);
+            Debug.Log("baseY: " + baseY);
+            Debug.Log("height: " + height);
+            
             Vector2 nextPosition = new Vector2(nextX, baseY + height);
             
             transform.position = nextPosition;
