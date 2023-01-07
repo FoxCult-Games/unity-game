@@ -102,7 +102,7 @@ namespace Player
         private bool IsGrounded()
         {
             Bounds bounds = collider.bounds;
-            return Physics2D.BoxCast(bounds.center, bounds.size * 0.75f, 0f, Vector2.down, playerData.GroundedDistance, playerData.RaycastMask);
+            return Physics2D.BoxCast(bounds.center, bounds.size * 1f, 0f, Vector2.down, playerData.GroundedDistance, playerData.RaycastMask);
         }
 
         public void TakeDamage(Vector2 direction, int damage = 1)
