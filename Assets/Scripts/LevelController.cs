@@ -1,29 +1,33 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    // Update is called once per frame
+    public static LevelController Instance { get; private set; }
 
-    public Animator transition;
-    public float transitionTime = 1.0f;
+    [SerializeField] private Animator transition;
+    [SerializeField] float transitionTime = 1.0f;
 
-    public void LoadNextLevel()
+    [SerializeField] private UnityEvent onSceneOpenTransition;
+    [SerializeField] private UnityEvent<int> onSceneCloseTransition;
+
+    private void Awake()
     {
-        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        if(!Instance) Instance = this;
+
+        DontDestroyOnLoad(Instance.gameObject);
     }
 
-    IEnumerator LoadLevel(int levelIndex)
+    public void ClosingAnimation(string sceneName)
     {
-        // Play close animation
-        transition.SetTrigger("LevelIsOver");
+        int levelIndex = SceneUtility.GetBuildIndexByScenePath(sceneName);
 
-        // Wait for animation to stop
-        yield return new WaitForSeconds(transitionTime);
-
-        // Load scene
         SceneManager.LoadScene(levelIndex);
+
+        onSceneCloseTransition?.Invoke(levelIndex);
+        onSceneOpenTransition?.Invoke();
     }
 }
