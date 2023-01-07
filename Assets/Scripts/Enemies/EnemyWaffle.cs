@@ -14,7 +14,9 @@ namespace Enemies
         protected override void Start()
         {
             base.Start();
-            
+
+            Fall();
+
             startingPosition = transform.position;
             rb.isKinematic = true;
         }
@@ -22,8 +24,6 @@ namespace Enemies
         protected override void Update()
         {
             base.Update();
-
-            Fall();
 
             if (!hasLanded && Vector2.Distance(transform.position, landingPosition) < 0.2f)
             {
@@ -38,20 +38,16 @@ namespace Enemies
             
             float distance = Vector2.Distance(landingPosition, startingPosition);
 
-            float nextX = Mathf.MoveTowards(transform.position.x, landingPosition.x, enemyData.Speed * Time.deltaTime);
-            float baseY = Mathf.Lerp(startingPosition.y, landingPosition.y, (nextX - startingPosition.x) / distance);
+            float tanAngle = Mathf.Tan(60f * Mathf.Deg2Rad);
+            float height = landingPosition.y - transform.position.y;
 
-            float height = 2 * (nextX - startingPosition.x) * (nextX - landingPosition.x) / (-0.25f * distance * distance);
-            
-            Debug.Log("baseY + height: " + baseY + height);
-            Debug.Log("baseY: " + baseY);
-            Debug.Log("height: " + height);
-            
-            Vector2 nextPosition = new Vector2(nextX, baseY + height);
-            
-            transform.position = nextPosition;
-            
-            transform.up = nextPosition - (Vector2)transform.position;
+            float Vz = Mathf.Sqrt(Physics2D.gravity.y * distance * distance / (2f * (height - distance * tanAngle)) );
+            float Vy = Vz * tanAngle;
+
+            Vector2 localVelocity = new Vector2(-Vz, Vy);
+            Vector2 globalVelocity = transform.TransformDirection(localVelocity);
+
+            rb.velocity = globalVelocity;
         }
 
         public void SetLandingPosition(Vector2 position)

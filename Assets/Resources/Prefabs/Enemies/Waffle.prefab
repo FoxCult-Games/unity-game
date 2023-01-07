@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4083819544208993160}
   - component: {fileID: 4083819544208993175}
   - component: {fileID: 4083819544208993174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Waffle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4083819545328148230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ObstacleCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4083819545601464203}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundedCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

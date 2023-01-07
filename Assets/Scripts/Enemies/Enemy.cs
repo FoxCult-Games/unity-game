@@ -36,7 +36,7 @@ namespace Enemies
         
         private float lastJumpTime = -9999f;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
         }

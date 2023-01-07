@@ -6,6 +6,8 @@ namespace Enemies
 {
     public class EnemyWaffleLauncher : Enemy, IShooter
     {
+        private Animator animator;
+
         [SerializeField] private GameObject wafflePrefab;
         [SerializeField] private Transform waffleSpawnPoint;
         
@@ -14,6 +16,13 @@ namespace Enemies
         public UnityEvent<Vector2> onShoot;
             
         private float lastFiredTime = -9999f;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            animator = GetComponent<Animator>();
+        }
 
         protected override void Start()
         {
@@ -35,12 +44,13 @@ namespace Enemies
 
         private bool IsPlayerInRange()
         {
-            return true;
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            return Vector2.Distance(transform.position, player.position) <= shooterData.FireRange;
         }
         
         private void ShootAnimation()
         {
-            
+            animator.Play("Waffle_launcher_shoots");
         }
 
         public void Shoot()
@@ -54,6 +64,12 @@ namespace Enemies
             onShoot?.Invoke(position);
             
             lastFiredTime = Time.time;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = IsPlayerInRange() ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(transform.position, shooterData.FireRange);
         }
     }
 }
