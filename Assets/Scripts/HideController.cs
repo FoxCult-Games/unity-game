@@ -14,7 +14,7 @@ public class HideController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D col)
     {
         if (col.compareTag("player")) {
             canvasToHide.gameObject.SetActive(false);
