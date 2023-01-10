@@ -16,6 +16,7 @@ namespace Player
         
         [Header("Movement")]
         [SerializeField] private float movementSpeed;
+        [SerializeField] private AnimationCurve smoothMovement;
         [SerializeField] private float bounceForce;
         
         [Header("Jump")]
@@ -36,6 +37,7 @@ namespace Player
         public float InsensitivityTime => insensitivityTime;
         
         public float MovementSpeed => movementSpeed;
+        public AnimationCurve SmoothMovementSpeed => smoothMovement;
         public float BounceForce => bounceForce;
         
         public float JumpForce => jumpForce;
