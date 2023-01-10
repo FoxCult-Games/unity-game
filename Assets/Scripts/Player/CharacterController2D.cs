@@ -15,6 +15,7 @@ namespace Player
         private Rigidbody2D rb;
         private Animator animator;
         private new Collider2D collider;
+        private SpriteRenderer spriteRenderer;
 
         [SerializeField] private bool isGrounded;
 
@@ -30,8 +31,8 @@ namespace Player
         private bool canJump;
         private float currentGroundedThreshold;
         
-        private readonly int jumpingAnimation = Animator.StringToHash("Jumping");
         private readonly int walkingAnimation = Animator.StringToHash("Walking");
+        private static readonly int Grounded = Animator.StringToHash("isGrounded");
 
         private void Awake()
         {
@@ -43,6 +44,7 @@ namespace Player
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             collider = GetComponent<Collider2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
             onDamaged.AddListener(BounceOnDamage);
         }
@@ -56,12 +58,19 @@ namespace Player
         private void Update()
         {
             Move();
+            
+            animator.enabled = IsGrounded();
 
-            if(rb.velocity.y < 0) 
+            if (rb.velocity.y < 0)
+            {
+                if(!IsGrounded()) spriteRenderer.sprite = playerData.FallSprite;
                 rb.velocity += Vector2.up * (Physics2D.gravity.y * (playerData.FallMultiplier - 1) * Time.deltaTime);
+            }
             else if(rb.velocity.y > 0 && !playerInputs.Gameplay.Jump.ReadValue<float>().Equals(1)) 
                 rb.velocity += Vector2.up * (Physics2D.gravity.y * (playerData.LowJumpMultiplier - 1) * Time.deltaTime);
-
+            else if(rb.velocity.y >= 0 && !IsGrounded())
+                spriteRenderer.sprite = playerData.JumpSprite;
+            
             if (!IsGrounded()) currentGroundedThreshold -= Time.deltaTime;
             else currentGroundedThreshold = playerData.GroundedCheckThreshold;
             
@@ -81,15 +90,13 @@ namespace Player
 
             transform.localScale = new Vector3(move < 0 ? 1 : -1, 1, 1);
 
-            animator.SetTrigger(walkingAnimation);
+            if(IsGrounded()) animator.SetTrigger(walkingAnimation);
             transform.position += (Vector3)offset;
         }
 
         private void Jump(InputAction.CallbackContext ctx)
         {
             if (!ctx.performed || !canJump) return;
-
-            if(isGrounded) animator.SetTrigger(jumpingAnimation);
 
             rb.AddForce(Vector2.up * playerData.JumpForce);
             

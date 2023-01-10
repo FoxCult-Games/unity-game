@@ -20,6 +20,8 @@ MonoBehaviour:
   jumpCooldown: 0.3
   fallMultiplier: 2.5
   lowJumpMultiplier: 1.8
+  jumpSprite: {fileID: 21300000, guid: a0653d29db5aba34eb3155035e9ab335, type: 3}
+  fallSprite: {fileID: 21300000, guid: 1c3c1934c1a2b6d4eb880f74c662f2d5, type: 3}
   groundedDistance: 0.4
   groundedCheckThreshold: 0.15
   raycastMask:
