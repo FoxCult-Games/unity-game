@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class CollectiblesController : MonoBehaviour
 {
     public static CollectiblesController Instance;
 
-    private Dictionary<CollectiblesTypes, int> collected;
+    private readonly Dictionary<CollectiblesTypes, int> collected = new Dictionary<CollectiblesTypes, int>();
 
     private void Awake()
     {
