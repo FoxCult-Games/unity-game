@@ -19,11 +19,13 @@ namespace Player
         [SerializeField] private bool isGrounded;
 
         public UnityEvent<int, Vector2> onDamaged;
+        public UnityEvent onJump;
 
         private int health;
         public int Health => health;
         
         private float move;
+        private float moveTime;
         private float lastJumpTime = -9999f;
         private float lastDamagedTime = -9999f;
         private bool canJump;
@@ -74,14 +76,20 @@ namespace Player
 
         private void Move()
         {
-            if (move == 0f) return;
+            if (move == 0f)
+            {
+                moveTime = 0f;
+                return;
+            }
 
-            Vector2 offset = new Vector2(move * Time.deltaTime * playerData.MovementSpeed, 0f);
+            float speed = playerData.MovementSpeed * playerData.SmoothMovementSpeed.Evaluate(moveTime) * move;
+            Vector2 offset = new Vector2(speed * Time.deltaTime, 0f);
 
             transform.localScale = new Vector3(move < 0 ? 1 : -1, 1, 1);
 
             animator.SetTrigger(walkingAnimation);
             transform.position += (Vector3)offset;
+            moveTime += Time.deltaTime;
         }
 
         private void Jump(InputAction.CallbackContext ctx)
@@ -91,14 +99,11 @@ namespace Player
             if(isGrounded) animator.SetTrigger(jumpingAnimation);
 
             rb.AddForce(Vector2.up * playerData.JumpForce);
-
-            Vector3 particlesPosition = transform.position + Vector3.down;
-            
-            GameObject particlesObject = Instantiate(playerData.JumpParticles, particlesPosition, Quaternion.identity);
-            particlesObject.GetComponent<ParticleSystem>().Play();
             
             currentGroundedThreshold = playerData.GroundedCheckThreshold;
             lastJumpTime = Time.time;
+
+            onJump?.Invoke();
         }
 
         private bool IsGrounded()
@@ -129,6 +134,14 @@ namespace Player
         private bool IsSensitive()
         {
             return Time.time - lastDamagedTime > playerData.InsensitivityTime;
+        }
+
+        public void PlayJumpingParticles()
+        {
+            Vector3 particlesPosition = transform.position + Vector3.down;
+
+            GameObject particlesObject = Instantiate(playerData.JumpParticles, particlesPosition, Quaternion.identity);
+            particlesObject.GetComponent<ParticleSystem>().Play();
         }
 
         public void Die()
