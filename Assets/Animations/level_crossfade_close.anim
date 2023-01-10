@@ -115,9 +115,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1
-    functionName: StartClosingAnimation
-    data: LV2
-    objectReferenceParameter: {fileID: 0}
+    functionName: LoadNextScene
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 98008f81582e26c4eb178ddcf350dd75, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
