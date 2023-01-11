@@ -8,6 +8,8 @@ namespace Player
 
     public class PlayerUIManager : MonoBehaviour
     {
+        [SerializeField] private GameObject Canvas;
+        
         [SerializeField] private Transform livesCounter;
         [SerializeField] private GameObject heartPrefab;
         

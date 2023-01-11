@@ -734,6 +734,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onJump:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &461312080
 Rigidbody2D:
   serializedVersion: 4
@@ -813,7 +819,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e1b38bf46143e08f0e0ac2f0da3256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesCounter: {fileID: 789198924}
+  Canvas: {fileID: 1736144856}
+  livesCounter: {fileID: 789198923}
+  heartPrefab: {fileID: 2366067312961433622, guid: 1d3b5a90258752145ae3508f461220b5, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
