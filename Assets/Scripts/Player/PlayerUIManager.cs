@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace Player
 {
+    using System.Linq;
+
     public class PlayerUIManager : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI livesCounter;
+        [SerializeField] private Transform livesCounter;
+        [SerializeField] private GameObject heartPrefab;
         
         private CharacterController2D characterController2D;
 
@@ -17,12 +20,15 @@ namespace Player
 
         private void Start()
         {
-            RefreshLivesCounter();
+            for (int i = 0; i < characterController2D.Health; i++)
+            {
+                Instantiate(heartPrefab, livesCounter);
+            }
         }
 
         public void RefreshLivesCounter()
         {
-            livesCounter.text = "Lives: " + characterController2D.Health;
+            livesCounter.Cast<Transform>().ToArray()[characterController2D.Health - 1].gameObject.SetActive(false);
         }
     }
 }

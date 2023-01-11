@@ -7,6 +7,8 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {
+    using UnityEngine.SceneManagement;
+
     public class CharacterController2D : MonoBehaviour, IDamageable
     {
         [SerializeField] private PlayerData playerData;
@@ -20,6 +22,7 @@ namespace Player
 
         public UnityEvent<int, Vector2> onDamaged;
         public UnityEvent onJump;
+        public UnityEvent onDeath;
 
         private int health;
         public int Health => health;
@@ -52,6 +55,8 @@ namespace Player
         {
             health = playerData.MaxHealth;
             currentGroundedThreshold = playerData.GroundedCheckThreshold;
+            
+            onDeath.AddListener(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
         }
 
         private void Update()
@@ -147,6 +152,7 @@ namespace Player
         public void Die()
         {
             Debug.Log("Player died");
+            onDeath?.Invoke();
         }
 
         private void OnEnable()
