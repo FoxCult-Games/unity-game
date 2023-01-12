@@ -30,6 +30,9 @@ namespace Player
 
         public void RefreshLivesCounter()
         {
+            if (characterController2D.Health <= 0)
+                return;
+            
             livesCounter.Cast<Transform>().ToArray()[characterController2D.Health - 1].gameObject.SetActive(false);
         }
     }
