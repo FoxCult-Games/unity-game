@@ -1,27 +1,24 @@
-﻿using System;
-using TMPro;
-using UnityEngine;
-
-namespace Player
+﻿namespace Managers
 {
     using System.Linq;
+    using UnityEngine;
+    using Player;
 
-    public class PlayerUIManager : MonoBehaviour
+    public class UIManager : MonoBehaviour, ISubManager
     {
         [SerializeField] private GameObject Canvas;
         
         [SerializeField] private Transform livesCounter;
         [SerializeField] private GameObject heartPrefab;
         
-        private CharacterController2D characterController2D;
+        [SerializeField] private CharacterController2D characterController2D;
 
-        private void Awake()
+        private IGameContext gameContext;
+        
+        public void Initialize(IGameContext gameContext)
         {
-            characterController2D = GetComponent<CharacterController2D>();
-        }
-
-        private void Start()
-        {
+            this.gameContext = gameContext;
+            
             for (int i = 0; i < characterController2D.Health; i++)
             {
                 Instantiate(heartPrefab, livesCounter);
@@ -30,6 +27,9 @@ namespace Player
 
         public void RefreshLivesCounter()
         {
+            if (characterController2D.Health <= 0)
+                return;
+            
             livesCounter.Cast<Transform>().ToArray()[characterController2D.Health - 1].gameObject.SetActive(false);
         }
     }
