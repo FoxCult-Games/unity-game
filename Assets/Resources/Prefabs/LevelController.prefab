@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 704932506734893929}
   - component: {fileID: 704932506734893928}
   - component: {fileID: 704932506734893931}
-  - component: {fileID: 704932506734893935}
+  - component: {fileID: 7855812041188785650}
   m_Layer: 5
   m_Name: Crossfade
   m_TagString: Untagged
@@ -199,7 +199,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &704932506734893935
+--- !u!114 &7855812041188785650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 704932506734893925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886f24b9d3c144b418e11d8b80fea122, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e460b4712b181b4a99ac9c662505523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &704932506862447611
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 704932506862447608}
-  - component: {fileID: 7062157831292912514}
+  - component: {fileID: 7141435711356301736}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: Untagged
@@ -244,7 +244,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7062157831292912514
+--- !u!114 &7141435711356301736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,26 +253,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 704932506862447611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98008f81582e26c4eb178ddcf350dd75, type: 3}
+  m_Script: {fileID: 11500000, guid: e68c2cd54a301f54bb9f0d420c2887ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transition: {fileID: 704932506734893931}
-  transitionTime: 1
-  onSceneOpenTransition:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 704932506734893935}
-        m_TargetAssemblyTypeName: AnimationController, Assembly-CSharp
-        m_MethodName: StartOpeningAnimation
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: level_crossfade_open
-          m_BoolArgument: 0
-        m_CallState: 2
-  onSceneCloseTransition:
-    m_PersistentCalls:
-      m_Calls: []
+  animator: {fileID: 704932506734893931}

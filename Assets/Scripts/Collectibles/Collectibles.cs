@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 namespace Collectibles
 {
+    using Managers;
+
     [Serializable]
     public class CollectiblesVFX
     {
@@ -34,7 +36,7 @@ namespace Collectibles
         {
             if (!collision.CompareTag("Player")) return;
 
-            CollectiblesController.Instance.Collect(type, amount);
+            GameplayManager.Instance.GameContext.CollectiblesController.Collect(type, amount);
             animator.Play(COLLECTED_ANIMATION);
 
             onCollected?.Invoke();

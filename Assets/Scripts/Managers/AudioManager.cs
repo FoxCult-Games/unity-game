@@ -2,7 +2,12 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class AudioManager : MonoBehaviour, ISubManager
+    public interface IAudioManager
+    {
+        void PlaySound(AudioClip audioClip);
+    }
+    
+    public class AudioManager : MonoBehaviour, ISubManager, IAudioManager
     {
         private IGameContext gameContext;
         

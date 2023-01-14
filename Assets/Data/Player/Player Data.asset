@@ -19,30 +19,30 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
+      time: 0.0000013716053
+      value: 0.30264455
+      inSlope: 3.1782
+      outSlope: 3.1782
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.061951734
     - serializedVersion: 3
-      time: 1
+      time: 0.6504376
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.13578536
+      outSlope: 0.13578536
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.26382092
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bounceForce: 4.9
-  jumpForce: 720
+  bounceForce: 4.4
+  jumpForce: 760
   jumpCooldown: 0.3
-  fallMultiplier: 2.5
+  fallMultiplier: 2.8
   lowJumpMultiplier: 1.8
   groundedDistance: 0.4
   groundedCheckThreshold: 0.15

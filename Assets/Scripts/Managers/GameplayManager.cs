@@ -4,31 +4,39 @@ namespace Managers
 {
     using System;
     using System.Collections.Generic;
+    using Collectibles;
 
     public interface IGameContext
     {
-        GameplayManager GameplayManager { get; }
-        AudioManager AudioManager { get; }
-        UIManager UIManager { get; }
-        LevelManager LevelManager { get; }
+        IGameplayManager GameplayManager { get; }
+        IAudioManager AudioManager { get; }
+        IUIManager UIManager { get; }
+        ILevelManager LevelManager { get; }
+        ICollectiblesController CollectiblesController { get; }
     }
 
     public class GameContext : IGameContext
     {
-        public GameplayManager GameplayManager { get; set; }
-        public AudioManager AudioManager { get; set; }
-        public UIManager UIManager { get; set; }
-        public LevelManager LevelManager { get; set; }
+        public IGameplayManager GameplayManager { get; set; }
+        public IAudioManager AudioManager { get; set; }
+        public IUIManager UIManager { get; set; }
+        public ILevelManager LevelManager { get; set; }
+        public ICollectiblesController CollectiblesController { get; set; }
     }
 
     public interface ISubManager
     {
         void Initialize(IGameContext gameContext);
     }
-    
-    public class GameplayManager : MonoBehaviour
+
+    public interface IGameplayManager
     {
-        public static GameplayManager Instance { get; private set; }
+        IGameContext GameContext { get; }
+    }
+    
+    public class GameplayManager : MonoBehaviour, IGameplayManager
+    {
+        public static IGameplayManager Instance { get; private set; }
         
         [SerializeField] private LevelManager levelManager;
         [SerializeField] private UIManager uiManager;
@@ -52,7 +60,8 @@ namespace Managers
                 GameplayManager = this,
                 LevelManager = levelManager,
                 UIManager = uiManager,
-                AudioManager = audioManager
+                AudioManager = audioManager,
+                CollectiblesController = new CollectiblesController(gameContext),
             };
             
             subManagers = new List<ISubManager>

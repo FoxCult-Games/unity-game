@@ -1,10 +1,18 @@
 ﻿namespace Managers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
     using Player;
+    using UI;
 
-    public class UIManager : MonoBehaviour, ISubManager
+    public interface IUIManager
+    {
+        void RefreshLivesCounter();
+        void RefreshCollectiblesCounter(CollectiblesTypes type);
+    }
+
+    public class UIManager : MonoBehaviour, ISubManager, IUIManager
     {
         [SerializeField] private GameObject Canvas;
         
@@ -12,8 +20,10 @@
         [SerializeField] private GameObject heartPrefab;
         
         [SerializeField] private CharacterController2D characterController2D;
-
+        [SerializeField] private List<CollectiblesView> views;
+        
         private IGameContext gameContext;
+        
         
         public void Initialize(IGameContext gameContext)
         {
@@ -23,6 +33,11 @@
             {
                 Instantiate(heartPrefab, livesCounter);
             }
+
+            foreach (var view in views)
+            {
+                view.Initialize(gameContext);
+            }
         }
 
         public void RefreshLivesCounter()
@@ -31,6 +46,11 @@
                 return;
             
             livesCounter.Cast<Transform>().ToArray()[characterController2D.Health - 1].gameObject.SetActive(false);
+        }
+
+        public void RefreshCollectiblesCounter(CollectiblesTypes type)
+        {
+            views.FirstOrDefault((view) => view.CollectibleType == type)?.Refresh();
         }
     }
 }

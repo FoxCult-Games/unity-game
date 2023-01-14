@@ -3,26 +3,26 @@ using UnityEngine.SceneManagement;
 
 namespace Managers
 {
-    public interface ILevelManager
+    public class LevelController : MonoBehaviour
     {
-        void ChangeScene(string scene);
-        void LoadNextScene();
-    }
-    
-    public class LevelManager : MonoBehaviour, ISubManager, ILevelManager
-    {
+        public static LevelController Instance { get; private set; }
+
         [SerializeField] private Animator animator;
 
         private string nextSceneName;
 
-        private IGameContext gameContext;
-        
         private const string FADE_IN = "level_crossfade_close";
         private const string FADE_OUT = "level_crossfade_open";
 
-        public void Initialize(IGameContext gameContext)
+        private void Awake()
         {
-            this.gameContext = gameContext;
+            if(!Instance) Instance = this;
+
+            DontDestroyOnLoad(Instance.gameObject);
+        }
+
+        private void Start()
+        {
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
     

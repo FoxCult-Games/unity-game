@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -19,7 +18,7 @@ namespace Player
         private Animator animator;
         private new Collider2D collider;
 
-        [SerializeField] private bool isGrounded;
+        private bool isGrounded;
 
         public UnityEvent<int, Vector2> onDamaged;
         public UnityEvent onJump;
@@ -158,7 +157,6 @@ namespace Player
 
         public void Die()
         {
-            Debug.Log("Player died");
             onDeath?.Invoke();
         }
 
