@@ -22,6 +22,11 @@ namespace Managers
         public IUIManager UIManager { get; set; }
         public ILevelManager LevelManager { get; set; }
         public ICollectiblesController CollectiblesController { get; set; }
+        
+        public GameContext()
+        {
+            CollectiblesController = new CollectiblesController(this);
+        }
     }
 
     public interface ISubManager
@@ -60,8 +65,7 @@ namespace Managers
                 GameplayManager = this,
                 LevelManager = levelManager,
                 UIManager = uiManager,
-                AudioManager = audioManager,
-                CollectiblesController = new CollectiblesController(gameContext),
+                AudioManager = audioManager
             };
             
             subManagers = new List<ISubManager>

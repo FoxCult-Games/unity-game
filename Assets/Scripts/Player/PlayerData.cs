@@ -22,6 +22,9 @@ namespace Player
         [SerializeField] private float jumpCooldown;
         [SerializeField] private float fallMultiplier;
         [SerializeField] private float lowJumpMultiplier;
+        [Space]
+        [SerializeField] private Sprite jumpSprite;
+        [SerializeField] private Sprite fallSprite;
         
         [Header("Ground Check")]
         [SerializeField] private float groundedDistance;
@@ -45,6 +48,9 @@ namespace Player
         public float JumpCooldown => jumpCooldown;
         public float FallMultiplier => fallMultiplier;
         public float LowJumpMultiplier => lowJumpMultiplier;
+        
+        public Sprite JumpSprite => jumpSprite;
+        public Sprite FallSprite => fallSprite;
         
         public float GroundedDistance => groundedDistance;
         public float GroundedCheckThreshold => groundedCheckThreshold;

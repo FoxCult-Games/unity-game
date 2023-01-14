@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Waffle
   m_EditorClassIdentifier: 
   maxHealth: 5
-  speed: 13.8
+  speed: 2.2
   waitTime: 0.8
   jumpForce: 720
   jumpCooldown: 1
   fallMultiplier: 2.2
   lowJumpMultiplier: 1.4
-  obstacleCheckDistance: 0
+  obstacleCheckDistance: 1
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  groundCheckDistance: 0
+    m_Bits: 8
+  groundCheckDistance: 0.4
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  jumpParticles: {fileID: 0}
+    m_Bits: 8
+  jumpParticles: {fileID: 1504636768437711972, guid: bc37d44eabcc35a47ac5f22dd234dabb, type: 3}

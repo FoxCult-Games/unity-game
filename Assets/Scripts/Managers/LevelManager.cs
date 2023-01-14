@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 namespace Managers
 {
+    using Unity.VisualScripting;
+
     public interface ILevelManager
     {
         void ChangeScene(string scene);
@@ -13,7 +15,7 @@ namespace Managers
     {
         [SerializeField] private Animator animator;
 
-        private string nextSceneName;
+        [SerializeField] private string nextSceneName;
 
         private IGameContext gameContext;
         
