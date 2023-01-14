@@ -7,6 +7,6 @@ public class CrossfadeAnimation : MonoBehaviour
 {
     public void LoadScene()
     {
-        LevelController.Instance.LoadNextScene();
+        GameplayManager.Instance.GameContext.LevelManager.LoadNextScene();
     }
 }

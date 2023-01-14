@@ -7,6 +7,6 @@ public class LoadNextScene : MonoBehaviour
 {
     private void ChangeScene()
     {
-        LevelController.Instance.LoadNextScene();
+        GameplayManager.Instance.GameContext.LevelManager.LoadNextScene();
     }
 }

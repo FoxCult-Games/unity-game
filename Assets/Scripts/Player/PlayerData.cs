@@ -30,6 +30,9 @@ namespace Player
 
         [Header("VFX")]
         [SerializeField] private GameObject jumpParticles;
+        
+        [Header("SFX")]
+        [SerializeField] private AudioClip jumpSound;
 
         public int MaxHealth => maxHealth;
         public float InsensitivityTime => insensitivityTime;
@@ -48,5 +51,7 @@ namespace Player
         public LayerMask RaycastMask => raycastMask;
         
         public GameObject JumpParticles => jumpParticles;
+        
+        public AudioClip JumpSound => jumpSound;
     }
 }

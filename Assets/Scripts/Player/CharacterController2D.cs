@@ -6,6 +6,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {
+    using Managers;
     using UnityEngine.SceneManagement;
 
     public class CharacterController2D : MonoBehaviour, IDamageable
@@ -46,14 +47,20 @@ namespace Player
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             collider = GetComponent<Collider2D>();
-
-            onDamaged.AddListener(BounceOnDamage);
         }
 
         private void Start()
         {
             health = playerData.MaxHealth;
             currentGroundedThreshold = playerData.GroundedCheckThreshold;
+            
+            onJump.AddListener(() =>
+            {
+                PlayJumpingParticles();
+                GameplayManager.Instance.GameContext.AudioManager.PlaySound(playerData.JumpSound);
+            });
+
+            onDamaged.AddListener(BounceOnDamage);
             
             onDeath.AddListener(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
         }
@@ -150,7 +157,6 @@ namespace Player
 
         public void Die()
         {
-            Debug.Log("Player died");
             onDeath?.Invoke();
         }
 

@@ -50,3 +50,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 136
   jumpParticles: {fileID: 1504636768437711972, guid: bc37d44eabcc35a47ac5f22dd234dabb, type: 3}
+  jumpSound: {fileID: 8300000, guid: e30bec8459d4f7b42a8f7531989f5446, type: 3}
