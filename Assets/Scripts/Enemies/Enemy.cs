@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -105,9 +107,11 @@ namespace Enemies
             List<Transform> waypointsList = waypoints.ToList();
             waypointsList.Add(waypoint.transform);
             waypoints = waypointsList.ToArray();
-            
+
+        #if UNITY_EDITOR
             Selection.activeGameObject = waypoint;
             SceneView.FrameLastActiveSceneView();
+        #endif
         }
 
         public void TakeDamage(Vector2 direction, int damage)

@@ -28,10 +28,13 @@
         public void Initialize(IGameContext gameContext)
         {
             this.gameContext = gameContext;
-            
-            for (int i = 0; i < characterController2D.Health; i++)
+
+            if (characterController2D)
             {
-                Instantiate(heartPrefab, livesCounter);
+                for (int i = 0; i < characterController2D.Health; i++)
+                {
+                    Instantiate(heartPrefab, livesCounter);
+                }
             }
 
             foreach (var view in views)

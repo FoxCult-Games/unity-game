@@ -528,7 +528,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &641301878
 RectTransform:
@@ -607,6 +607,10 @@ PrefabInstance:
     - target: {fileID: 2199016074779218722, guid: d43635352405a6b4da22dddd4de47198, type: 3}
       propertyPath: m_Name
       value: '@GameplayManager@'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199016075214662119, guid: d43635352405a6b4da22dddd4de47198, type: 3}
+      propertyPath: views.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8383288976702847793, guid: d43635352405a6b4da22dddd4de47198, type: 3}
       propertyPath: nextSceneName
