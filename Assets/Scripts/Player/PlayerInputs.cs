@@ -46,6 +46,15 @@ namespace Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip Level"",
+                    ""type"": ""Button"",
+                    ""id"": ""df943b1c-b0f5-44cb-bdb4-d15300696a1d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +101,28 @@ namespace Player
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd71a8c1-1132-45ad-87f1-caf01ec6eaaa"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip Level"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f30be150-2b87-42bf-8201-c0b6a87a6a79"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip Level"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -114,6 +145,7 @@ namespace Player
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
             m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+            m_Gameplay_SkipLevel = m_Gameplay.FindAction("Skip Level", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -175,12 +207,14 @@ namespace Player
         private IGameplayActions m_GameplayActionsCallbackInterface;
         private readonly InputAction m_Gameplay_Movement;
         private readonly InputAction m_Gameplay_Jump;
+        private readonly InputAction m_Gameplay_SkipLevel;
         public struct GameplayActions
         {
             private @PlayerInputs m_Wrapper;
             public GameplayActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
             public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+            public InputAction @SkipLevel => m_Wrapper.m_Gameplay_SkipLevel;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -196,6 +230,9 @@ namespace Player
                     @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                    @SkipLevel.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkipLevel;
+                    @SkipLevel.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkipLevel;
+                    @SkipLevel.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkipLevel;
                 }
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
@@ -206,6 +243,9 @@ namespace Player
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
+                    @SkipLevel.started += instance.OnSkipLevel;
+                    @SkipLevel.performed += instance.OnSkipLevel;
+                    @SkipLevel.canceled += instance.OnSkipLevel;
                 }
             }
         }
@@ -223,6 +263,7 @@ namespace Player
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnSkipLevel(InputAction.CallbackContext context);
         }
     }
 }

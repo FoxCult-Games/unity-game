@@ -15,10 +15,34 @@ MonoBehaviour:
   maxHealth: 5
   insensitivityTime: 0.5
   movementSpeed: 10
+  smoothMovement:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0000013716053
+      value: 0.30264455
+      inSlope: 3.1782
+      outSlope: 3.1782
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.061951734
+    - serializedVersion: 3
+      time: 0.6504376
+      value: 1
+      inSlope: 0.13578536
+      outSlope: 0.13578536
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.26382092
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   bounceForce: 4.4
-  jumpForce: 720
+  jumpForce: 760
   jumpCooldown: 0.3
-  fallMultiplier: 2.5
+  fallMultiplier: 2.8
   lowJumpMultiplier: 1.8
   jumpSprite: {fileID: 21300000, guid: a0653d29db5aba34eb3155035e9ab335, type: 3}
   fallSprite: {fileID: 21300000, guid: 1c3c1934c1a2b6d4eb880f74c662f2d5, type: 3}
@@ -28,3 +52,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 136
   jumpParticles: {fileID: 1504636768437711972, guid: bc37d44eabcc35a47ac5f22dd234dabb, type: 3}
+  jumpSound: {fileID: 8300000, guid: e30bec8459d4f7b42a8f7531989f5446, type: 3}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
@@ -16,6 +14,7 @@ namespace Player
         
         [Header("Movement")]
         [SerializeField] private float movementSpeed;
+        [SerializeField] private AnimationCurve smoothMovement;
         [SerializeField] private float bounceForce;
         
         [Header("Jump")]
@@ -34,11 +33,15 @@ namespace Player
 
         [Header("VFX")]
         [SerializeField] private GameObject jumpParticles;
+        
+        [Header("SFX")]
+        [SerializeField] private AudioClip jumpSound;
 
         public int MaxHealth => maxHealth;
         public float InsensitivityTime => insensitivityTime;
         
         public float MovementSpeed => movementSpeed;
+        public AnimationCurve SmoothMovementSpeed => smoothMovement;
         public float BounceForce => bounceForce;
         
         public float JumpForce => jumpForce;
@@ -54,5 +57,7 @@ namespace Player
         public LayerMask RaycastMask => raycastMask;
         
         public GameObject JumpParticles => jumpParticles;
+        
+        public AudioClip JumpSound => jumpSound;
     }
 }

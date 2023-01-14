@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -7,6 +6,9 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Player
 {
+    using Managers;
+    using UnityEngine.SceneManagement;
+
     public class CharacterController2D : MonoBehaviour, IDamageable
     {
         [SerializeField] private PlayerData playerData;
@@ -15,24 +17,25 @@ namespace Player
         private Rigidbody2D rb;
         private Animator animator;
         private new Collider2D collider;
-        private SpriteRenderer spriteRenderer;
 
-        [SerializeField] private bool isGrounded;
+        private bool isGrounded;
 
         public UnityEvent<int, Vector2> onDamaged;
         public UnityEvent onJump;
+        public UnityEvent onDeath;
 
         private int health;
         public int Health => health;
         
         private float move;
+        private float moveTime;
         private float lastJumpTime = -9999f;
         private float lastDamagedTime = -9999f;
         private bool canJump;
         private float currentGroundedThreshold;
         
+        private readonly int jumpingAnimation = Animator.StringToHash("Jumping");
         private readonly int walkingAnimation = Animator.StringToHash("Walking");
-        private static readonly int Grounded = Animator.StringToHash("isGrounded");
 
         private void Awake()
         {
@@ -44,33 +47,33 @@ namespace Player
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             collider = GetComponent<Collider2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
-
-            onDamaged.AddListener(BounceOnDamage);
         }
 
         private void Start()
         {
             health = playerData.MaxHealth;
             currentGroundedThreshold = playerData.GroundedCheckThreshold;
+            
+            onJump.AddListener(() =>
+            {
+                PlayJumpingParticles();
+                GameplayManager.Instance.GameContext.AudioManager.PlaySound(playerData.JumpSound);
+            });
+
+            onDamaged.AddListener(BounceOnDamage);
+            
+            onDeath.AddListener(() => SceneManager.LoadScene(SceneManager.GetActiveScene().name));
         }
 
         private void Update()
         {
             Move();
-            
-            animator.enabled = IsGrounded();
 
-            if (rb.velocity.y < 0)
-            {
-                if(!IsGrounded()) spriteRenderer.sprite = playerData.FallSprite;
+            if(rb.velocity.y < 0) 
                 rb.velocity += Vector2.up * (Physics2D.gravity.y * (playerData.FallMultiplier - 1) * Time.deltaTime);
-            }
             else if(rb.velocity.y > 0 && !playerInputs.Gameplay.Jump.ReadValue<float>().Equals(1)) 
                 rb.velocity += Vector2.up * (Physics2D.gravity.y * (playerData.LowJumpMultiplier - 1) * Time.deltaTime);
-            else if(rb.velocity.y >= 0 && !IsGrounded())
-                spriteRenderer.sprite = playerData.JumpSprite;
-            
+
             if (!IsGrounded()) currentGroundedThreshold -= Time.deltaTime;
             else currentGroundedThreshold = playerData.GroundedCheckThreshold;
             
@@ -84,19 +87,27 @@ namespace Player
 
         private void Move()
         {
-            if (move == 0f) return;
+            if (move == 0f)
+            {
+                moveTime = 0f;
+                return;
+            }
 
-            Vector2 offset = new Vector2(move * Time.deltaTime * playerData.MovementSpeed, 0f);
+            float speed = playerData.MovementSpeed * playerData.SmoothMovementSpeed.Evaluate(moveTime) * move;
+            Vector2 offset = new Vector2(speed * Time.deltaTime, 0f);
 
             transform.localScale = new Vector3(move < 0 ? 1 : -1, 1, 1);
 
-            if(IsGrounded()) animator.SetTrigger(walkingAnimation);
+            animator.SetTrigger(walkingAnimation);
             transform.position += (Vector3)offset;
+            moveTime += Time.deltaTime;
         }
 
         private void Jump(InputAction.CallbackContext ctx)
         {
             if (!ctx.performed || !canJump) return;
+
+            if(isGrounded) animator.SetTrigger(jumpingAnimation);
 
             rb.AddForce(Vector2.up * playerData.JumpForce);
             
@@ -109,7 +120,7 @@ namespace Player
         private bool IsGrounded()
         {
             Bounds bounds = collider.bounds;
-            return Physics2D.BoxCast(bounds.center, bounds.size * 1f, 0f, Vector2.down, playerData.GroundedDistance, playerData.RaycastMask);
+            return Physics2D.BoxCast(bounds.center, bounds.size * 0.75f, 0f, Vector2.down, playerData.GroundedDistance, playerData.RaycastMask);
         }
 
         public void TakeDamage(Vector2 direction, int damage = 1)
@@ -146,7 +157,7 @@ namespace Player
 
         public void Die()
         {
-            Debug.Log("Player died");
+            onDeath?.Invoke();
         }
 
         private void OnEnable()
