@@ -129,6 +129,8 @@ namespace Player
             
             health -= damage;
             
+            GameplayManager.Instance.GameContext.UIManager.RefreshLivesCounter();
+            
             lastDamagedTime = Time.time;
             lastJumpTime = Time.time;
             

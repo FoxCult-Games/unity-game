@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Enemies
 {
+    using Player;
+
     public class EnemyWaffle : Enemy
     {
         private Vector2 startingPosition;
@@ -23,13 +25,11 @@ namespace Enemies
         {
             base.Update();
 
-            Fall();
-
-            if (!hasLanded && Vector2.Distance(transform.position, landingPosition) < 0.2f)
-            {
-                rb.isKinematic = false;
-                hasLanded = true;
-            }
+            // if (!hasLanded && Vector2.Distance(transform.position, landingPosition) < 0.2f)
+            // {
+            //     rb.isKinematic = false;
+            //     hasLanded = true;
+            // }
         }
 
         private void Fall()
@@ -56,5 +56,12 @@ namespace Enemies
         }
         
         private Vector2 GetDirection() => landingPosition - (Vector2)transform.position;
+
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            if (!col.gameObject.CompareTag("Player")) return;
+
+            col.gameObject.GetComponent<CharacterController2D>().TakeDamage(col.transform.position - transform.position, 1);
+        }
     }
 }
