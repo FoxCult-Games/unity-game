@@ -25,4 +25,9 @@ public class CollectiblesController : MonoBehaviour
         collected.Add(collectible, amount);
         return amount;
     }
+
+    public int GetCollected(CollectiblesTypes type)
+    {
+        return collected[type];
+    }
 }

@@ -40,9 +40,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   bounceForce: 4.4
-  jumpForce: 720
+  jumpForce: 760
   jumpCooldown: 0.3
-  fallMultiplier: 2.5
+  fallMultiplier: 2.8
   lowJumpMultiplier: 1.8
   groundedDistance: 0.4
   groundedCheckThreshold: 0.15
